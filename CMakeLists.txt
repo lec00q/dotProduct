@@ -18,14 +18,10 @@ SET(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
 ############################################
 
 LIST(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/cmake")
-INCLUDE(GetGitRevisionDescription)
-
-git_describe(VERSION --tags)
 
 INCLUDE(options REQUIRED)
 INCLUDE(compiler_options REQUIRED)
 INCLUDE(install_options REQUIRED)
-
 
 #################################
 #       External libraries      #
@@ -57,13 +53,3 @@ INCLUDE_DIRECTORIES(${SUBMODULES})
 FOREACH(MODULE ${SUBMODULES})
     ADD_SUBDIRECTORY(${MODULE})
 ENDFOREACH(MODULE)
-
-######################
-#   Enable testing   #
-######################
-
-IF(BUILD_UNIT_TESTS)
-    ENABLE_TESTING(true)
-    INCLUDE_DIRECTORIES(tests)
-    ADD_SUBDIRECTORY(tests)
-ENDIF()
