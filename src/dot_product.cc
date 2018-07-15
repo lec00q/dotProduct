@@ -9,20 +9,13 @@
 using namespace std;
 
 
-/**
- * @brief      Generate a sparse vector.
- *
- * @param[in]  size  The size of the resulting vector.
- *
- * @return     A sparse vector.
- */
-vector<int> sparseVector(unsigned int size)
+vector<int> sparseVector(unsigned int size, unsigned int sparsity_factor)
 {
     uniform_int_distribution<int> distribution(1, 128);
     default_random_engine generator;
 
     vector<int> vec(size, 0);
-    generate_n(vec.begin(), size / 1000, [&distribution, &generator]()
+    generate_n(vec.begin(), size / sparsity_factor, [&distribution, &generator]()
                { return distribution(generator); });
 
     random_device rd;
@@ -33,15 +26,6 @@ vector<int> sparseVector(unsigned int size)
 }
 
 
-/**
- * @brief      Convert a sparse vector into a map.
- *
- *             The map uses array index as keys.
- *
- * @param[in]  A     A sparse vector.
- *
- * @return     An equivalent map which store values.
- */
 unordered_map<int, int> sparseVectorToMap(const vector<int> &A)
 {
     unordered_map<int, int> B;
@@ -54,13 +38,6 @@ unordered_map<int, int> sparseVectorToMap(const vector<int> &A)
 }
 
 
-/**
- * @brief      Convert a sparse vector into its condensed representation.
- *
- * @param[in]  A     A sparse vector.
- *
- * @return     A reduced-size sparse vector.
- */
 vector<int> condensify(const vector<int> &A)
 {
     vector<int> B(A.size() * 2);
